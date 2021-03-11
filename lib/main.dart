@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'offers.dart';
 
 void main() {
   runApp(MyApp());
@@ -31,8 +32,8 @@ class _MyHomePageState extends State<MyHomePage> {
     'images/insta.png',
     'images/face.png',
   ];
+
   int _currentIndex = 3;
-  final List<Widget> _childern = [];
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -41,25 +42,6 @@ class _MyHomePageState extends State<MyHomePage> {
           preferredSize: Size.fromHeight(300),
           child: AppBar(
             centerTitle: true,
-            leading: GestureDetector(
-              onTap: () => {},
-              child: Icon(
-                Icons.menu,
-                color: Colors.black,
-              ),
-            ),
-            actions: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(right: 20),
-                child: GestureDetector(
-                  onTap: () => {},
-                  child: Icon(
-                    Icons.more_vert,
-                    color: Colors.black,
-                  ),
-                ),
-              )
-            ],
             elevation: 0.0,
             flexibleSpace: Container(
               child: Image.asset(
@@ -123,7 +105,10 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: Icon(Icons.restaurant_menu),
               label: 'Menu',
             ),
-            BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Location'),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.map),
+              label: 'Location',
+            ),
           ],
           selectedItemColor: Colors.red,
         ),
@@ -134,6 +119,12 @@ class _MyHomePageState extends State<MyHomePage> {
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
+      switch (index) {
+        case 1:
+          Navigator.of(context).push(
+            (MaterialPageRoute(builder: (context) => OffersScreen())),
+          );
+      }
     });
   }
 }
