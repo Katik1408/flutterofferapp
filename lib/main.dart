@@ -5,14 +5,11 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      debugShowCheckedModeBanner: false,
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -28,39 +25,115 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
+  final List<String> _listItem = [
+    'images/feedback.png',
+    'images/location.png',
+    'images/insta.png',
+    'images/face.png',
+  ];
+  int _currentIndex = 3;
+  final List<Widget> _childern = [];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+    return SafeArea(
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(300),
+          child: AppBar(
+            centerTitle: true,
+            leading: GestureDetector(
+              onTap: () => {},
+              child: Icon(
+                Icons.menu,
+                color: Colors.black,
+              ),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+            actions: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(right: 20),
+                child: GestureDetector(
+                  onTap: () => {},
+                  child: Icon(
+                    Icons.more_vert,
+                    color: Colors.black,
+                  ),
+                ),
+              )
+            ],
+            elevation: 0.0,
+            flexibleSpace: Container(
+              child: Image.asset(
+                'images/backg.jpg',
+                fit: BoxFit.cover,
+              ),
+              // DecorationImage(image: BoxDecoration(image: AssetImage(''))),
             ),
+          ),
+        ),
+        body: SafeArea(
+          child: Container(
+            child: Expanded(
+              child: GridView.count(
+                crossAxisCount: 2,
+                padding: EdgeInsets.all(30),
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                children: _listItem
+                    .map(
+                      (item) => Card(
+                        child: Center(
+                          child: InkWell(
+                            splashColor: Colors.green,
+                            onTap: () => {},
+                            child: GestureDetector(
+                              onTap: () => {print('Item is ' + item)},
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage(item),
+                                    fit: BoxFit.cover,
+                                  ),
+                                  borderRadius: BorderRadius.circular(0),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
+            ),
+          ),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          currentIndex: _currentIndex,
+          onTap: onTabTapped,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.ac_unit),
+              label: 'Offers',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.restaurant_menu),
+              label: 'Menu',
+            ),
+            BottomNavigationBarItem(icon: Icon(Icons.map), label: 'Location'),
           ],
+          selectedItemColor: Colors.red,
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
     );
+  }
+
+  void onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
   }
 }
