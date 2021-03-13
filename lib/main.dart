@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'menu.dart';
 import 'offers.dart';
 
 void main() {
@@ -33,20 +34,25 @@ class _MyHomePageState extends State<MyHomePage> {
     'images/face.png',
   ];
 
-  int _currentIndex = 3;
+  int _currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(300),
-          child: AppBar(
-            centerTitle: true,
-            elevation: 0.0,
-            flexibleSpace: Container(
-              child: Image.asset(
-                'images/backg.jpg',
-                fit: BoxFit.cover,
+          preferredSize: Size.fromHeight(350),
+          child: InkWell(
+            child: Container(
+              child: AppBar(
+                centerTitle: true,
+                elevation: 10,
+                shadowColor: Colors.black,
+                flexibleSpace: Container(
+                  child: Image.asset(
+                    'images/pizza.png',
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
               // DecorationImage(image: BoxDecoration(image: AssetImage(''))),
             ),
@@ -57,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Expanded(
               child: GridView.count(
                 crossAxisCount: 2,
-                padding: EdgeInsets.all(30),
+                padding: EdgeInsets.all(20),
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
                 children: _listItem
@@ -110,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
               label: 'Location',
             ),
           ],
-          selectedItemColor: Colors.red,
+          selectedItemColor: Colors.green[200],
         ),
       ),
     );
@@ -124,6 +130,12 @@ class _MyHomePageState extends State<MyHomePage> {
           Navigator.of(context).push(
             (MaterialPageRoute(builder: (context) => OffersScreen())),
           );
+          break;
+        case 2:
+          Navigator.of(context).push(
+            (MaterialPageRoute(builder: (context) => MenuScreen())),
+          );
+          break;
       }
     });
   }

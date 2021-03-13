@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:offerapp/main.dart';
 
 class OffersScreen extends StatefulWidget {
   @override
@@ -9,10 +10,20 @@ class OffersScreen extends StatefulWidget {
 
 class OffersScreenState extends State<OffersScreen> {
   int _currentIndex = 0;
-
+  final List<String> _listItem = [
+    'images/feedback.png',
+    'images/location.png',
+  ];
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
+      switch (_currentIndex) {
+        case 0:
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => MyHomePage()),
+          );
+          break;
+      }
     });
   }
 
@@ -24,11 +35,14 @@ class OffersScreenState extends State<OffersScreen> {
           preferredSize: Size.fromHeight(300),
           child: AppBar(
             centerTitle: true,
+            backgroundColor: Colors.blueAccent,
             leading: GestureDetector(
               onTap: () => {},
-              child: Icon(
-                Icons.menu,
-                color: Colors.black,
+              child: InkWell(
+                child: Icon(
+                  Icons.arrow_back,
+                  color: Colors.black,
+                ),
               ),
             ),
             actions: <Widget>[
@@ -44,16 +58,48 @@ class OffersScreenState extends State<OffersScreen> {
               )
             ],
             elevation: 0.0,
-            flexibleSpace: Container(
-              child: Image.asset(
-                'images/backg.jpg',
-                fit: BoxFit.cover,
+            // flexibleSpace: Container(
+            //   child: Image.asset(
+            //     'images/backg.jpg',
+            //     fit: BoxFit.cover,
+            //   ),
+            //   // DecorationImage(image: BoxDecoration(image: AssetImage(''))),
+            // ),
+          ),
+        ),
+        body: SafeArea(
+          child: Container(
+            child: Expanded(
+              child: GridView.count(
+                crossAxisCount: 2,
+                padding: EdgeInsets.all(30),
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                children: _listItem
+                    .map(
+                      (item) => Card(
+                        child: Center(
+                          child: InkWell(
+                            onTap: () => {print('Item is ' + item)},
+                            child: Container(
+                              padding: EdgeInsets.all(20),
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(item),
+                                  fit: BoxFit.cover,
+                                ),
+                                borderRadius: BorderRadius.circular(0),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                    .toList(),
               ),
-              // DecorationImage(image: BoxDecoration(image: AssetImage(''))),
             ),
           ),
         ),
-        body: Text('Inside Offer'),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
@@ -76,7 +122,7 @@ class OffersScreenState extends State<OffersScreen> {
               label: 'Location',
             ),
           ],
-          selectedItemColor: Colors.red,
+          selectedItemColor: Colors.green[200],
         ),
       ),
     );
