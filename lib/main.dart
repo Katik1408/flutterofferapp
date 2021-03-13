@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:offerapp/location.dart';
 import 'menu.dart';
 import 'offers.dart';
 
@@ -134,6 +135,11 @@ class _MyHomePageState extends State<MyHomePage> {
         case 2:
           Navigator.of(context).push(
             (MaterialPageRoute(builder: (context) => MenuScreen())),
+          );
+          break;
+        case 3:
+          Navigator.of(context).push(
+            (MaterialPageRoute(builder: (context) => LocationScreen())),
           );
           break;
       }
